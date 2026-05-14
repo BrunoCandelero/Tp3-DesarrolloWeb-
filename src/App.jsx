@@ -1,27 +1,50 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 import './App.css'
+import EncabezadoHero from './componentes/EncabezadoHero'
+import SeccionListadoPersonajes from './componentes/SeccionListadoPersonajes'
+import SeccionDetallePersonaje from './componentes/SeccionDetallePersonajes'
+import SeccionDetalleEpisodio from './componentes/SeccionDetalleEpisodio'
+import SeccionComparador from './componentes/SeccionComparador'
 
 function App() {
-  const [personajes, setPersonajes] = useState([])
+  const navigate = useNavigate()
+  const [resumenLista, setResumenLista] = useState({
+    paginas: 1,
+    cantidadPersonajes: 0,
+    etiquetaEstado: 'Todos',
+  })
 
-  useEffect(() => {
-    fetch('https://rickandmortyapi.com/api/character')
-      .then(res => res.json())
-      .then(data => setPersonajes(data.results))
-  }, [])
+  const handleSeleccionarPersonaje = (id) => {
+    navigate(`/personaje/${id}`)
+  }
+
+  const handleCambioResumen = (resumen) => {
+    setResumenLista(resumen)
+  }
 
   return (
-    <div className="container">
-      <h1>Personajes de Rick & Morty</h1>
-      <div className="grid">
-        {personajes.map(p => (
-          <div key={p.id} className="card">
-            <img src={p.image} alt={p.name} />
-            <h3>{p.name}</h3>
-            <p>{p.status} - {p.species}</p>
-          </div>
-        ))}
-      </div>
+    <div className="pagina">
+      <EncabezadoHero
+        paginas={resumenLista.paginas}
+        cantidadPersonajes={resumenLista.cantidadPersonajes}
+        etiquetaEstado={resumenLista.etiquetaEstado}
+      />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <SeccionListadoPersonajes
+              onSeleccionarPersonaje={handleSeleccionarPersonaje}
+              onCambioResumen={handleCambioResumen}
+            />
+          }
+        />
+        <Route path="/personaje/:id" element={<SeccionDetallePersonaje />} />
+        <Route path="/episodio/:id" element={<SeccionDetalleEpisodio />} />
+        <Route path="/comparador" element={<SeccionComparador />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
     </div>
   )
 }
