@@ -1,0 +1,11 @@
+.estado {
+  text-align: center;
+  padding: 20px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.estado.error {
+  color: var(--peligro);
+  font-weight: 500;
+}
