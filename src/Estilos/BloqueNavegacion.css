@@ -1,0 +1,22 @@
+.pestanas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.pestanas a {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--heading);
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.pestanas a.activo {
+  border-color: var(--acento);
+  background: var(--acento-suave);
+  color: var(--acento);
+}
