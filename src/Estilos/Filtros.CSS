@@ -1,0 +1,21 @@
+.filtros {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.filtro {
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.filtro.activo {
+  border-color: var(--acento);
+  background: var(--acento-suave);
+  color: var(--acento);
+}
