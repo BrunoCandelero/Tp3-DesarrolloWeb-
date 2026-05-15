@@ -1,0 +1,43 @@
+.encabezado-principal {
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.encabezado-subtitulo {
+  font-size: 18px;
+  color: var(--text);
+  margin: 12px 0 0;
+}
+
+.tarjeta-datos {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.etiqueta-datos {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--muted);
+  margin: 0 0 16px;
+}
+
+.lista-datos {
+  display: grid;
+  gap: 12px;
+}
+
+.lista-datos div {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.lista-datos strong {
+  font-size: 18px;
+  color: var(--heading);
+}

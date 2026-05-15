@@ -1,0 +1,48 @@
+.controles-comparador {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.controles-comparador .campo {
+  flex: 1;
+  min-width: 140px;
+}
+
+.grilla-comparador {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.tarjeta-comparador {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px;
+}
+
+.tarjeta-comparador img {
+  border-radius: 10px;
+  width: 100%;
+  height: auto;
+  margin-bottom: 12px;
+}
+
+.tarjeta-comparador h3 {
+  margin-bottom: 12px;
+}
+
+.tarjeta-comparador ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.tarjeta-comparador li {
+  color: var(--text);
+}
