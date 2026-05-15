@@ -1,0 +1,29 @@
+.app-contenedor {
+  position: relative;
+  min-height: 100vh;
+}
+
+.fondo-video {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.fondo-video-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fondo-video-capa {
+  position: absolute;
+  inset: 0;
+  background: rgba(245, 241, 233, 0.25);
+}
+
+.contenido {
+  position: relative;
+  z-index: 1;
+}

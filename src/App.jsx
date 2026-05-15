@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 import './App.css'
+import videoPortal from './assets/portal.mp4'
 import EncabezadoHero from './componentes/EncabezadoHero'
 import SeccionListadoPersonajes from './componentes/SeccionListadoPersonajes'
 import SeccionDetallePersonaje from './componentes/SeccionDetallePersonajes'
@@ -24,27 +25,41 @@ function App() {
   }
 
   return (
-    <div className="pagina">
-      <EncabezadoHero
-        paginas={resumenLista.paginas}
-        cantidadPersonajes={resumenLista.cantidadPersonajes}
-        etiquetaEstado={resumenLista.etiquetaEstado}
-      />
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <SeccionListadoPersonajes
-              onSeleccionarPersonaje={handleSeleccionarPersonaje}
-              onCambioResumen={handleCambioResumen}
-            />
-          }
+    <div className="app-contenedor">
+      <div className="fondo-video" aria-hidden="true">
+        <video
+          className="fondo-video-media"
+          autoPlay
+          loop
+          muted
+          playsInline
+        >
+          <source src={videoPortal} type="video/mp4" />
+        </video>
+        <div className="fondo-video-capa" />
+      </div>
+      <div className="pagina contenido">
+        <EncabezadoHero
+          paginas={resumenLista.paginas}
+          cantidadPersonajes={resumenLista.cantidadPersonajes}
+          etiquetaEstado={resumenLista.etiquetaEstado}
         />
-        <Route path="/personaje/:id" element={<SeccionDetallePersonaje />} />
-        <Route path="/episodio/:id" element={<SeccionDetalleEpisodio />} />
-        <Route path="/comparador" element={<SeccionComparador />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <SeccionListadoPersonajes
+                onSeleccionarPersonaje={handleSeleccionarPersonaje}
+                onCambioResumen={handleCambioResumen}
+              />
+            }
+          />
+          <Route path="/personaje/:id" element={<SeccionDetallePersonaje />} />
+          <Route path="/episodio/:id" element={<SeccionDetalleEpisodio />} />
+          <Route path="/comparador" element={<SeccionComparador />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </div>
     </div>
   )
 }
