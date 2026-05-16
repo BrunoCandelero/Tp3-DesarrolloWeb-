@@ -1,0 +1,21 @@
+@media (max-width: 768px) {
+  .encabezado-principal {
+    grid-template-columns: 1fr;
+  }
+
+  .detalle {
+    grid-template-columns: 1fr;
+  }
+
+  .grilla-tarjetas {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  }
+
+  .controles-comparador {
+    flex-direction: column;
+  }
+
+  .controles-comparador .campo {
+    width: 100%;
+  }
+}

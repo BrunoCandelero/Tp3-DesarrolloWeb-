@@ -1,12 +1,16 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios'; // Usamos Axios como pide el TP
+import { useEffect, useMemo, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import axios from 'axios' // Usamos Axios como pide el TP
 
 const obtenerIdDeUrl = (url) => url.split('/').pop();
 
 function SeccionDetallePersonaje({ idPersonajeInicial, alSeleccionarEpisodio }) {
+  const navigate = useNavigate()
+  const { id: idParam } = useParams()
+  const idInicial = useMemo(() => idPersonajeInicial ?? idParam ?? '', [idPersonajeInicial, idParam])
   // Estados para el buscador y selección
-  const [inputId, setInputId] = useState(idPersonajeInicial ?? '');
-  const [idSeleccionado, setIdSeleccionado] = useState(idPersonajeInicial ?? '');
+  const [inputId, setInputId] = useState(idInicial)
+  const [idSeleccionado, setIdSeleccionado] = useState(idInicial)
   
   // Estados para los datos
   const [detalle, setDetalle] = useState(null);
@@ -18,58 +22,69 @@ function SeccionDetallePersonaje({ idPersonajeInicial, alSeleccionarEpisodio }) 
 
   // Sincronizar si cambia el ID desde afuera (ej: desde la lista)
   useEffect(() => {
-    if (!idPersonajeInicial) return;
-    const normalizado = String(idPersonajeInicial);
-    setInputId(normalizado);
-    setIdSeleccionado(normalizado);
-  }, [idPersonajeInicial]);
+    if (!idInicial) return
+    const normalizado = String(idInicial)
+    setInputId(normalizado)
+    setIdSeleccionado(normalizado)
+  }, [idInicial])
 
   // Petición a la API con Axios
   useEffect(() => {
-    if (!idSeleccionado) return;
+    if (!idSeleccionado) return
 
-    let montado = true;
-    setCargando(true);
-    setError('');
-    setDetalle(null);
-    setEpisodios([]);
+    let montado = true
+    setCargando(true)
+    setError('')
+    setDetalle(null)
+    setEpisodios([])
 
     // 1. Endpoint: Detalle del Personaje
-    axios.get(`https://rickandmortyapi.com/api/character/${idSeleccionado}`)
-      .then(res => {
-        if (!montado) return;
-        const datosPersonaje = res.data;
-        setDetalle(datosPersonaje);
+    axios
+      .get(`https://rickandmortyapi.com/api/character/${idSeleccionado}`)
+      .then((res) => {
+        if (!montado) return
+        const datosPersonaje = res.data
+        setDetalle(datosPersonaje)
 
         // Sacamos los IDs de los episodios
-        const idsEpisodios = (datosPersonaje.episode ?? []).map(obtenerIdDeUrl);
-        if (idsEpisodios.length === 0) return;
+        const idsEpisodios = (datosPersonaje.episode ?? []).map(obtenerIdDeUrl)
+        if (idsEpisodios.length === 0) return
 
         // 2. Endpoint: Lista de Episodios (usando la misma API pero otro recurso)
-        return axios.get(`https://rickandmortyapi.com/api/episode/${idsEpisodios.join(',')}`);
+        return axios.get(`https://rickandmortyapi.com/api/episode/${idsEpisodios.join(',')}`)
       })
-      .then(resEpisodios => {
-        if (!montado || !resEpisodios) return;
+      .then((resEpisodios) => {
+        if (!montado || !resEpisodios) return
         // La API devuelve un objeto si es uno solo, o un array si son varios
-        const normalizado = Array.isArray(resEpisodios.data) ? resEpisodios.data : [resEpisodios.data];
-        setEpisodios(normalizado);
+        const normalizado = Array.isArray(resEpisodios.data) ? resEpisodios.data : [resEpisodios.data]
+        setEpisodios(normalizado)
       })
-      .catch(err => {
-        if (!montado) return;
-        setError('No se pudo encontrar el personaje o sus episodios.');
-        console.error(err);
+      .catch((err) => {
+        if (!montado) return
+        setError('No se pudo encontrar el personaje o sus episodios.')
+        console.error(err)
       })
       .finally(() => {
-        if (montado) setCargando(false);
-      });
+        if (montado) setCargando(false)
+      })
 
-    return () => { montado = false; };
-  }, [idSeleccionado]);
+    return () => {
+      montado = false
+    }
+  }, [idSeleccionado])
 
   const manejarBusqueda = () => {
-    if (!inputId.trim()) return;
-    setIdSeleccionado(inputId);
-  };
+    if (!inputId.trim()) return
+    setIdSeleccionado(inputId)
+  }
+
+  const manejarSeleccionEpisodio = (episodioId) => {
+    if (alSeleccionarEpisodio) {
+      alSeleccionarEpisodio(episodioId)
+      return
+    }
+    navigate(`/episodio/${episodioId}`)
+  }
 
   return (
     <section className="panel">
@@ -118,7 +133,7 @@ function SeccionDetallePersonaje({ idPersonajeInicial, alSeleccionarEpisodio }) 
                 <button
                   key={episodio.id}
                   className="episode-card"
-                  onClick={() => alSeleccionarEpisodio(episodio.id)}
+                  onClick={() => manejarSeleccionEpisodio(episodio.id)}
                 >
                   <span>{episodio.episode}</span>
                   <strong>{episodio.name}</strong>
@@ -130,7 +145,7 @@ function SeccionDetallePersonaje({ idPersonajeInicial, alSeleccionarEpisodio }) 
         </div>
       )}
     </section>
-  );
+  )
 }
 
-export default SeccionDetallePersonaje;
+export default SeccionDetallePersonaje

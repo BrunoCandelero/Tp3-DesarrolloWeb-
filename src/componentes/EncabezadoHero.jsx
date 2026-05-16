@@ -1,15 +1,15 @@
 function EncabezadoHero({ paginas, cantidadPersonajes, etiquetaEstado }) {
   return (
-    <header className="hero">
+    <header className="encabezado-principal">
       <div>
         <h1>Centro de Control de Rick & Morty</h1>
-        <p className="subtitulo">
+        <p className="encabezado-subtitulo">
           Navega por personajes y episodios
         </p>
       </div>
-      <div className="hero-card">
-        <p className="hero-etiqueta">Datos en vivo</p>
-        <div className="hero-stats">
+      <div className="tarjeta-datos">
+        <p className="etiqueta-datos">Datos en vivo</p>
+        <div className="lista-datos">
           <div>
             <span>Páginas</span>
             <strong>{paginas}</strong>

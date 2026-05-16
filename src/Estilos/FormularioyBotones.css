@@ -1,0 +1,39 @@
+.campo {
+  display: grid;
+  gap: 6px;
+}
+
+.campo label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.campo-fila {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.campo input {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: var(--surface);
+  color: var(--heading);
+  min-width: 160px;
+}
+
+.campo button,
+.controles-comparador button {
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  background: var(--acento);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 14px;
+}
