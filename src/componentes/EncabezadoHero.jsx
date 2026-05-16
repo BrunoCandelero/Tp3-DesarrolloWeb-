@@ -2,7 +2,7 @@ function EncabezadoHero({ paginas, cantidadPersonajes, etiquetaEstado }) {
   return (
     <header className="encabezado-principal">
       <div>
-        <h1>Centro de Control de Rick & Morty</h1>
+        <h1> Rick & Morty</h1>
         <p className="encabezado-subtitulo">
           Navega por personajes y episodios
         </p>
